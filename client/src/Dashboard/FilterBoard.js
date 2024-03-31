@@ -13,7 +13,7 @@ function FilterBoard() {
 
     const SearchByName = async (name) => {
         try {
-            const response = await axios.post(`http://localhost:7000/api/dashboard/getuser`, { name: name });
+            const response = await axios.post(`https://heliverse-mg68.onrender.com/api/dashboard/getuser`, { name: name });
             dispatch(ChangeData(response.data.data))
 
         } catch (error) {
@@ -23,7 +23,7 @@ function FilterBoard() {
 
     const SearchById = async () => {
         try {
-            const response = await axios.post(`http://localhost:7000/api/dashboard/userbyid/${id}`);
+            const response = await axios.post(`https://heliverse-mg68.onrender.com/api/dashboard/userbyid/${id}`);
             dispatch(ChangeData(response.data.data))
 
         } catch (error) {
@@ -35,7 +35,7 @@ function FilterBoard() {
         const fetchData = async () => {
             try {
                 // Send the request with the configured headers
-                const response = await axios.get(`http://localhost:7000/api/dashboard/loaddata`);
+                const response = await axios.get(`https://heliverse-mg68.onrender.com/api/dashboard/loaddata`);
                 dispatch(ChangeData(response.data.data))
                 if (response.data.data[0].id == 1) {
                     dispatch(PreviousButtonState(true));
@@ -54,7 +54,7 @@ function FilterBoard() {
         // console.log('Selected department:', department);
         // setLoad(false);
         try {
-            const response = await axios.post(`http://localhost:7000/api/dashboard/filter`, { fieldtype: fieldtype });
+            const response = await axios.post(`https://heliverse-mg68.onrender.com/api/dashboard/filter`, { fieldtype: fieldtype });
             dispatch(ChangeData(response.data.data))
 
         } catch (error) {

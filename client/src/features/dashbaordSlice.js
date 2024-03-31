@@ -20,9 +20,12 @@ export const dashboardSlice = createSlice({
         },
         PreviousButtonState: (state, actions) => {
             state.currentstate = actions.payload;
+        },
+        SetUserIdForUpdate: (state, actions) => {
+            state.userid = actions.payload;
         }
     }
 })
 
-export const { ChangeData,PreviousButtonState } = dashboardSlice.actions
+export const { ChangeData,PreviousButtonState,SetUserIdForUpdate } = dashboardSlice.actions
 export default dashboardSlice.reducer

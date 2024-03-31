@@ -136,12 +136,13 @@ class DashBoardController {
     static updateUserByid = async (req, res) => {
         try {
             const id = req.params.id;
-            console.log(id);
+            // console.log(id);
             const { first_name, last_name, email, gender, avatar, domain, available } = req.body;
 
-            const user = await DataModel.findOne({ id: id });
+            const user = await DataModel.findOne({ _id: id });
             console.log(user);
             const newData = {
+                id:user.id,
                 first_name: first_name,
                 last_name: last_name,
                 email: email,
@@ -150,7 +151,7 @@ class DashBoardController {
                 domain: domain,
                 available: available,
             }
-            const updatedUser = await DataModel.findByIdAndUpdate(user._id, newData, { new: true });
+            const updatedUser = await DataModel.findByIdAndUpdate(id, newData, { new: true });
 
             if (!updatedUser) {
                 return res.status(404).json({ error: 'User not found' });
