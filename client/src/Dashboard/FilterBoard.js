@@ -66,31 +66,46 @@ function FilterBoard() {
     };
 
     return (
-        <div >
-            <div class="input-group mb-3">
-                <select value={fieldtype} onChange={handleSelectChangeField}>
-                    <option value="gender">Gender</option>
-                    <option value="domain">Domain</option>
-                    <option value="available">Available</option>
-                </select>
-                <button onClick={handleFieldCheckButtonClick} class="btn btn-outline-secondary">Button</button>
+        <div className='DashBoard'>
+            <div className='filterbody'>
+                <div>
+                    <div class="input-group mb-1">
+                        <select value={fieldtype} onChange={handleSelectChangeField}>
+                            <option value="gender">Gender</option>
+                            <option value="domain">Domain</option>
+                            <option value="available">Available</option>
+                        </select>
+                        <button onClick={handleFieldCheckButtonClick} class="btn btn-outline-secondary">Button</button>
+                    </div>
+
+                    <div class="input-group mb-1">
+                        <input placeholder='enter userId ...' onChange={(e) => setid(e.target.value)} />
+                        <button onClick={SearchById} class="btn btn-outline-secondary">Button</button>
+                    </div>
+                </div>
+                <div class="searchinput">
+                    <input placeholder='enter user name to search ...' onChange={(e) => SearchByName(e.target.value)} />
+                </div>
             </div>
-
-            <div>
-                <input placeholder='enter userId ...' onChange={(e) => setid(e.target.value)} />
-                <button onClick={SearchById} class="btn btn-outline-secondary">Button</button>
-            </div>
-
-
-
-
-            <input placeholder='enter user name to search ...' onChange={(e) => SearchByName(e.target.value)} />
             <div className='Dashbody'>
                 {fileContent ?
                     <div className='dashcontent'>
                         {
                             data.map((obj) => {
-                                return (<li key={obj.id}> {obj.first_name} </li>)
+                                return (
+                                    <div class="card" style={{ "margin": "10px" }}>
+                                        <img src={obj.avatar} width={"50px"} height={"50px"} alt="..." />
+                                        <div class="card-body">
+                                            <div>
+                                                <h5 class="card-title">Name : {obj.first_name} {obj.last_name}</h5>
+                                                <h5 class="card-title">Email: {obj.email}</h5>
+                                                <h5 class="card-title">Gender: {obj.gender}</h5>
+                                                <h5 class="card-title">Domain: {obj.domain}</h5>
+                                            </div>
+                                        </div>
+                                        {/* <li key={obj.id}> {obj.id} </li> */}
+                                    </div>
+                                )
                             })
                         }
 

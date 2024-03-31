@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { useDispatch, useSelector } from "react-redux"
 
-function Employee() {
+function AddUser() {
     const navigate = useNavigate();
 
 
@@ -15,8 +14,6 @@ function Employee() {
     const [gender, setGender] = useState("");
     const [available, setAvailable] = useState("");
     const [domain, setDomain] = useState("");
-    const id = useSelector(state => state.userid)
-    console.log(id);
     const HandleSubmit = async () => {
         // console.log("working");
         try {
@@ -26,24 +23,19 @@ function Employee() {
             } else {
                 console.log(firstname, lastname, email, gender, email, available, domain);
                 // console.log();
-                const response = await axios.put(`https://heliverse-mg68.onrender.com/api/dashboard/updateuser/${id}`, { firstname, lastname, email, gender, available, avatar, domain });
+                const response = await axios.post(`https://heliverse-mg68.onrender.com/api/dashboard/adduser`, { first_name:firstname, last_name:lastname, email, gender, available, avatar, domain });
                 console.log(response);
                 if (response.status == 200) {
                     alert(`Submit Successfully`)
-                    navigate("/employee")
+                    navigate("/")
                 } else {
                     console.log(response.status);
                 }
             }
 
-            // const {fullname,age, dob, salary, department}=response.data.Employee;
-            // setAllemployee(response.data.employees)
-            // setName(response.data.user.name); 
-            // setEmail(response.data.user.email)
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-
     }
     const handleAvailableChange = (event) => {
         setAvailable(event.target.value);
@@ -56,9 +48,9 @@ function Employee() {
     }
 
     return (
-        <div>
+        <div className='User'>
             <div className='sidebar'>
-                <h1>ADD/Update EMPLOYEE</h1>
+                <h1>ADD EMPLOYEE</h1>
                 <div className='form'>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" className="lable">First Name</label>
@@ -105,4 +97,4 @@ function Employee() {
     )
 }
 
-export default Employee
+export default AddUser

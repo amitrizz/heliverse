@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import './DashBoard.css'
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { ChangeData, PreviousButtonState,SetUserIdForUpdate } from '../features/dashbaordSlice'
+import { ChangeData, PreviousButtonState, SetUserIdForUpdate } from '../features/dashbaordSlice'
 
 function DashBoard() {
 
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
     const data = useSelector(state => state.data)
     const isbuttonDisble = useSelector(state => state.currentstate)
@@ -64,9 +64,9 @@ function DashBoard() {
             console.error('Error fetching data:', error);
         }
     }
-    const RedirectToUpdate = (id)=>{
+    const RedirectToUpdate = (id) => {
         dispatch(SetUserIdForUpdate(id));
-        navigate("/employee")
+        navigate("/updateuser")
     }
 
     useEffect(() => {
@@ -93,25 +93,32 @@ function DashBoard() {
             <div className='Dashbody'>
                 {fileContent ?
                     <div className='dashcontent'>
+                        <button onClick={RemoveMoreDataToTable} disabled={isbuttonDisble}>Pre PAge</button>
+                        <button onClick={AddMoreDataToTable}>Next PAge</button>
                         {
                             data.map((obj) => {
                                 return (
-                                    <div class="card" >
-                                        <img src={obj.avatar} width={"50px"} height={"50px"}  alt="..."/>
-                                            <div class="card-body">
-                                                <h5 class="card-title">FirstName : {obj.first_name}</h5>
+                                    <div class="card" style={{ "margin": "10px" }}>
+                                        <img src={obj.avatar} width={"50px"} height={"50px"} alt="..." />
+                                        <div class="card-body">
+                                            <div>
+                                                <h5 class="card-title">Name : {obj.first_name} {obj.last_name}</h5>
                                                 <h5 class="card-title">Email: {obj.email}</h5>
                                                 <h5 class="card-title">Gender: {obj.gender}</h5>
-                                                <button onClick={()=>DeleteUserbyId(obj._id)} class="btn btn-primary">Delete User</button>
-                                                <button onClick={()=>RedirectToUpdate(obj._id)} class="btn btn-primary">Update User</button>
+                                                <h5 class="card-title">Domain: {obj.domain}</h5>
                                             </div>
-                                            {/* <li key={obj.id}> {obj.id} </li> */}
+                                            <div>
+
+                                                <button onClick={() => DeleteUserbyId(obj._id)} class="btn btn-primary">Delete User</button>
+                                                <button style={{ "marginLeft": "10px" }} onClick={() => RedirectToUpdate(obj._id)} class="btn btn-primary">Update User</button>
+                                            </div>
+                                        </div>
+                                        {/* <li key={obj.id}> {obj.id} </li> */}
                                     </div>
                                 )
                             })
                         }
-                        <button onClick={RemoveMoreDataToTable} disabled={isbuttonDisble}>Pre PAge</button>
-                        <button onClick={AddMoreDataToTable}>Next PAge</button>
+
                     </div>
                     : <div className='dashloading'>Loading..</div>}
             </div>

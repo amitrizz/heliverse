@@ -6,9 +6,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './Dashboard/Navbar';
 import { Provider } from "react-redux"
 import Header from './Dashboard/Header';
-import {store} from "../src/stores/store.js"
-// import SearchName from './Dashboard/SearchName.js';
-import Employee from './Dashboard/Employee.js';
+import { store } from "../src/stores/store.js"
+import AddUser from './Dashboard/AddUser.js';
+import UpdateUser from './Dashboard/UpdateUser.js';
 
 function App() {
   return (
@@ -19,18 +19,12 @@ function App() {
         <div className='body'>
           <Header />
           <div className='app'>
-
             <Navbar className='navbar' />
             <Routes>
               <Route path="/" element={<DashBoard />} ></Route>
-              {/* <Route path="/login" element={<Login />}  ></Route>
-        <Route path="/register" element={<Signup />}></Route> */}
-              {/* <Route path="/profile" element={<UserProfile />} /> */}
               <Route path="/filter" element={<FilterBoard />} />
-              <Route path="/employee" element={<Employee />} />
-              {/* <Route path="/AddEmployee" element={<AddEmployee />} /> */}
-              {/* <Route path="/UpdateEmployee" element={<UpdateEmployee />} /> */}
-
+              <Route path="/adduser" element={<AddUser />} />
+              <Route path="/updateuser" element={<UpdateUser />} />
             </Routes>
           </div>
         </div>

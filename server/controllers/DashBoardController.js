@@ -95,7 +95,7 @@ class DashBoardController {
             const id = req.params.id;
             console.log(id);
             const results = await DataModel.find({ id: id });
-            console.log(results);
+            // console.log(results);
             res.send({ data: "data", data: results });
             // return res.status(201).send({ sataus: "success", message: " successfully registered", user: saved_user, token: token });
         }

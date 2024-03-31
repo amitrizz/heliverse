@@ -12,7 +12,7 @@ function Navbar() {
                         <Link to="/" className={"link-styles"}>DashBoard</Link>
                     </li>
                     <li className="link">
-                        <Link to="/employee" className={"link-styles"}>Employee</Link>
+                        <Link to="/adduser" className={"link-styles"}>Employee</Link>
                     </li>
                     <li className="link">
                         <Link to="/filter" className={"link-styles"}>FilterBoard</Link>
