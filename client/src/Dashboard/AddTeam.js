@@ -43,8 +43,27 @@ function AddTeam() {
         setteamUser(updateUser)
     }
 
-    const handleSubmitData = () => {
+    const handleSubmitData = async() => {
+        try {
+            // Send the request with the configured headers
+            if (!teamname || !teamid || teamUser.length>0) {
+                alert("Enter All Fields");
+            } else {
+                // console.log(firstname, lastname, email, gender, email, available, domain);
+                // console.log();
+                const response = await axios.post(`https://heliverse-mg68.onrender.com/api/team/addteam`, {  });
+                console.log(response);
+                if (response.status == 200) {
+                    alert(`Submit Successfully`)
+                    navigate("/")
+                } else {
+                    console.log(response.status);
+                }
+            }
 
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     }
     return (
         <div>

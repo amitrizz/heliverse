@@ -26,19 +26,19 @@ class TeamController {
     }
     static addTeam = async (req, res, next) => {
         try {
-            const { id, team_name, teamUser } = req.body;
+            const { id, team_name, team_member } = req.body;
             // console.log(id);
 
-            const team=await TeamDataModel.find({id:id});
-            if(team){
+            const team = await TeamDataModel.find({ id: id });
+            if (team) {
                 res.send({ data: "data", result: "Already Exist" });
                 return;
             }
 
             const newData = new TeamDataModel({
-                id: id,
-                team_name: team_name,
-                team_member: teamUser,
+                id,
+                team_name,
+                team_member,
             });
             await newData.save();
             res.send({ data: "data", result: "result submitted" });
@@ -63,12 +63,12 @@ class TeamController {
             });
             await DataModel.find({ id: { $in: userList } })
                 .then(result => {
-                    userList=result;
+                    userList = result;
                 })
                 .catch(err => {
                     console.error('Error:', err);
                 });
-            res.send({ data: "data", data: results,userList:userList });
+            res.send({ data: "data", data: results, userList: userList });
 
         }
         catch (error) {
