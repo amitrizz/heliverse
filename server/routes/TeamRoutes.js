@@ -5,13 +5,9 @@ import TeamController from '../controllers/TeamController.js';
 
 
 //public routes
-teamrouter.get('/loaddata',TeamController.loadUser);
-// router.post('/loaddata', DashBoardController.loadUser);
-
-
-// router.post('/showdata', DashBoardController.showData);
-// router.post('/filter', DashBoardController.filterdata);
-
+teamrouter.get('/getallteam',TeamController.getAllTeam);
+teamrouter.get('/teambyid/:id',TeamController.getTeambyid);
+teamrouter.post('/addteam',TeamController.addTeam);
 
 
 export default teamrouter;

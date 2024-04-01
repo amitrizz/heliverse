@@ -15,6 +15,9 @@ function Navbar() {
                         <Link to="/adduser" className={"link-styles"}>Employee</Link>
                     </li>
                     <li className="link">
+                        <Link to="/addteam" className={"link-styles"}>Create Team</Link>
+                    </li>
+                    <li className="link">
                         <Link to="/filter" className={"link-styles"}>FilterBoard</Link>
                     </li>
                 </ul>

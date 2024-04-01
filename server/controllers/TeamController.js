@@ -1,18 +1,19 @@
 import DataModel from '../models/DashBoard.js';
-
+import TeamDataModel from '../models/Team.js'
 
 class TeamController {
-    static loadUser = async (req, res, next) => {
+    static getAllTeam = async (req, res, next) => {
         try {
             const noOfPage = 20;
             let { skip } = req.body;
             if (!skip) {
                 skip = 1;
             }
+
             const nextresult = (skip - 1) * noOfPage
-            // console.log(skip);
-            const results = await DataModel.find().skip(nextresult).limit(noOfPage);
-            // console.log(results);
+            console.log(skip);
+            const results = await TeamDataModel.find().skip(nextresult).limit(noOfPage);
+            console.log(results);
             res.send({ data: "data", data: results });
 
         }
@@ -23,84 +24,25 @@ class TeamController {
             // return res.status(500).send({ status: "failed", message: "Uable to register" });
         }
     }
-
-
-    static showData = async (req, res) => {
+    static addTeam = async (req, res, next) => {
         try {
-            const noOfPage = 30;
-            const { skip } = req.body;
-            const nextresult = (skip - 1) * noOfPage
-            // console.log(skip);
-            const results = await DataModel.find().skip(nextresult).limit(noOfPage);
-            // console.log(results);
-            res.send({ data: "data", data: results });
-            // return res.status(201).send({ sataus: "success", message: " successfully registered", user: saved_user, token: token });
-        }
-        catch (error) {
-            console.log(error);
-            res.send({ error: "something is misssing in db" })
-            // res.redirect("/error")
-            // return res.status(500).send({ status: "failed", message: "Uable to register" });
-        }
-    }
-
-    static getUser = async (req, res) => {
-        try {
-            const noOfPage = 10;
-            const { name } = req.body;
-
-            // Construct a regular expression object using the searchTerm variable
-            const regexPattern = new RegExp(name, 'i');
-            const results = await DataModel.find({ first_name: { $regex: regexPattern } }).limit(noOfPage);
-            // console.log(results);
-            res.send({ data: "data", data: results });
-            // return res.status(201).send({ sataus: "success", message: " successfully registered", user: saved_user, token: token });
-        }
-        catch (error) {
-            console.log(error);
-            res.send({ error: "something is misssing in db" })
-            // res.redirect("/error")
-            // return res.status(500).send({ status: "failed", message: "Uable to register" });
-        }
-    }
-    static getUserByid = async (req, res) => {
-        try {
-
-            const id = req.params.id;
+            const { id, team_name, teamUser } = req.body;
             // console.log(id);
 
+            const team=await TeamDataModel.find({id:id});
+            if(team){
+                res.send({ data: "data", result: "Already Exist" });
+                return;
+            }
 
-            const results = await DataModel.findOne({ id: id });
-            // console.log(results);
-            res.send({ data: "data", data: results });
-            // return res.status(201).send({ sataus: "success", message: " successfully registered", user: saved_user, token: token });
-        }
-        catch (error) {
-            console.log(error);
-            res.send({ error: "something is misssing in db" })
-            // res.redirect("/error")
-            // return res.status(500).send({ status: "failed", message: "Uable to register" });
-        }
-    }
-    static Adduser = async (req, res) => {
-        try {
-
-            const { id, first_name, last_name, email, gender, avatar, domain, available } = req.body;
-            // console.log(id);
-
-            const newData = new DataModel({
+            const newData = new TeamDataModel({
                 id: id,
-                first_name: first_name,
-                last_name: last_name,
-                email: email,
-                gender: gender,
-                avatar: avatar,
-                domain: domain,
-                available: available,
+                team_name: team_name,
+                team_member: teamUser,
             });
             await newData.save();
             res.send({ data: "data", result: "result submitted" });
-            // return res.status(201).send({ sataus: "success", message: " successfully registered", user: saved_user, token: token });
+
         }
         catch (error) {
             console.log(error);
@@ -109,31 +51,25 @@ class TeamController {
             // return res.status(500).send({ status: "failed", message: "Uable to register" });
         }
     }
-    static updateUserByid = async (req, res) => {
+    static getTeambyid = async (req, res, next) => {
         try {
             const id = req.params.id;
-            console.log(id);
-            const { first_name, last_name, email, gender, avatar, domain, available } = req.body;
 
-            const user = await DataModel.findOne({ id: id });
-            console.log(user);
-            const newData = {
-                first_name: first_name,
-                last_name: last_name,
-                email: email,
-                gender: gender,
-                avatar: avatar,
-                domain: domain,
-                available: available,
-            }
-            const updatedUser = await DataModel.findByIdAndUpdate(user._id, newData, { new: true });
+            const results = await TeamDataModel.findOne({ id: id });
+            // console.log(results.team_member);
+            let userList = [];
+            results.team_member.forEach((obj) => {
+                userList.push(obj.id)
+            });
+            await DataModel.find({ id: { $in: userList } })
+                .then(result => {
+                    userList=result;
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                });
+            res.send({ data: "data", data: results,userList:userList });
 
-            if (!updatedUser) {
-                return res.status(404).json({ error: 'User not found' });
-            }
-
-            res.send({ data: "data", result: "Update Sucessfully" });
-            // return res.status(201).send({ sataus: "success", message: " successfully registered", user: saved_user, token: token });
         }
         catch (error) {
             console.log(error);
@@ -142,27 +78,5 @@ class TeamController {
             // return res.status(500).send({ status: "failed", message: "Uable to register" });
         }
     }
-    static deleteUserByid = async (req, res) => {
-        try {
-            const id  = req.params.id
-            const user = await DataModel.findOne({ id: id });
-            const deletedUser = await DataModel.findByIdAndDelete({_id:user._id});
-
-            if (!deletedUser) {
-                return res.status(404).json({ error: 'User not found' });
-            }
-
-            // res.json({ message: 'User deleted successfully' });
-            res.send({ data: "data", result: "User deleted successfully" });
-            // return res.status(201).send({ sataus: "success", message: " successfully registered", user: saved_user, token: token });
-        }
-        catch (error) {
-            console.log(error);
-            res.send({ error: "something is misssing in db" })
-            // res.redirect("/error")
-            // return res.status(500).send({ status: "failed", message: "Uable to register" });
-        }
-    }
-
 }
 export default TeamController;
