@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import axios from "axios"
 // import './DashBoard.css'
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import { ChangeData, PreviousButtonState } from '../features/dashbaordSlice'
 
 function AddTeam() {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [id, setid] = useState("")
     const [teamname, setteamname] = useState("")
     const [teamid, setteamid] = useState("")
@@ -43,15 +45,15 @@ function AddTeam() {
         setteamUser(updateUser)
     }
 
-    const handleSubmitData = async() => {
+    const handleSubmitData = async () => {
         try {
             // Send the request with the configured headers
-            if (!teamname || !teamid || teamUser.length>0) {
+            if (!teamname || !teamid || teamUser.length == 0) {
                 alert("Enter All Fields");
             } else {
                 // console.log(firstname, lastname, email, gender, email, available, domain);
                 // console.log();
-                const response = await axios.post(`https://heliverse-mg68.onrender.com/api/team/addteam`, {  });
+                const response = await axios.post(`https://heliverse-mg68.onrender.com/api/team/addteam`, { id: teamid, team_name: teamname, team_member: teamUser });
                 console.log(response);
                 if (response.status == 200) {
                     alert(`Submit Successfully`)
