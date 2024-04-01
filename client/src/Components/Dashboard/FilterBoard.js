@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 // import './DashBoard.css'
 import { useDispatch, useSelector } from "react-redux"
-import { ChangeData, PreviousButtonState } from '../features/dashbaordSlice'
+import { ChangeData, PreviousButtonState } from '../../features/dashbaordSlice'
 
 function FilterBoard() {
     const data = useSelector(state => state.data)

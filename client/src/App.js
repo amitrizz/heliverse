@@ -1,15 +1,17 @@
 // import logo from './logo.svg';
 import './App.css';
-import DashBoard from './Dashboard/DashBoard';
-import FilterBoard from './Dashboard/FilterBoard';
+import DashBoard from './Components/Dashboard/DashBoard.js';
+import FilterBoard from './Components/Dashboard/FilterBoard.js';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './Dashboard/Navbar';
+import Navbar from './Components/Navbar.js';
 import { Provider } from "react-redux"
-import Header from './Dashboard/Header';
+import Header from './Components/Header.js';
 import { store } from "../src/stores/store.js"
-import AddUser from './Dashboard/AddUser.js';
-import UpdateUser from './Dashboard/UpdateUser.js';
-import AddTeam from './Dashboard/AddTeam.js';
+import AddUser from './Components/AddUpdateUser/AddUser.js';
+import UpdateUser from './Components/AddUpdateUser/UpdateUser.js';
+import AddTeam from './Components/Team/AddTeam.js';
+import ShowTeam from './Components/Team/ShowTeam.js';
+import AllTeams from './Components/Team/AllTeams.js';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
               <Route path="/adduser" element={<AddUser />} />
               <Route path="/updateuser" element={<UpdateUser />} />
               <Route path="/addteam" element={<AddTeam />} />
+              <Route path="/teams" element={<AllTeams />} />
+              <Route path="/showteam" element={<ShowTeam />} />
             </Routes>
           </div>
         </div>

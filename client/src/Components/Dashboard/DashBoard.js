@@ -3,7 +3,7 @@ import axios from "axios"
 import './DashBoard.css'
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { ChangeData, PreviousButtonState, SetUserIdForUpdate } from '../features/dashbaordSlice'
+import { ChangeData, PreviousButtonState, SetUserIdForUpdate } from '../../features/dashbaordSlice'
 
 function DashBoard() {
 

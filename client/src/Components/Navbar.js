@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './DashBoard.css'
 
 
 function Navbar() {
@@ -19,6 +18,9 @@ function Navbar() {
                     </li>
                     <li className="link">
                         <Link to="/filter" className={"link-styles"}>FilterBoard</Link>
+                    </li>
+                    <li className="link">
+                        <Link to="/teams" className={"link-styles"}>Show Teams</Link>
                     </li>
                 </ul>
             </nav>

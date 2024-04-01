@@ -31,7 +31,7 @@ class TeamController {
 
             const team = await TeamDataModel.find({ id: id });
             if (team.length > 0) {
-                res.send({ data: "data", result: "Already Exist" });
+                res.status(404).send({ data: "data", result: "Already Exist" });
                 return;
             }
 
